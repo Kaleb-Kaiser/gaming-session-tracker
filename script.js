@@ -263,6 +263,9 @@ function updateStats() {
     document.getElementById('totalHours').textContent = totalHours.toFixed(1);
     document.getElementById('avgHours').textContent = avgHours;
     document.getElementById('commonMood').textContent = commonMood ? MOOD_EMOJIS[commonMood] : '-';
+
+    // Update most played game
+    updateMostPlayedGame(sessions);
 }
 
 /**
@@ -289,6 +292,65 @@ function getMostCommonMood(sessions) {
     }
 
     return mostCommon;
+}
+
+/**
+ * Calculate and display the most played game
+ * @param {Array} sessions - Array of session objects
+ */
+function updateMostPlayedGame(sessions) {
+    const mostPlayedCard = document.getElementById('mostPlayedCard');
+
+    if (sessions.length === 0) {
+        mostPlayedCard.innerHTML = '<p class="empty-state-small">No data yet</p>';
+        return;
+    }
+
+    // Group sessions by game and calculate stats
+    const gameStats = {};
+    sessions.forEach(session => {
+        if (!gameStats[session.game]) {
+            gameStats[session.game] = {
+                totalHours: 0,
+                sessionCount: 0
+            };
+        }
+        gameStats[session.game].totalHours += session.hours;
+        gameStats[session.game].sessionCount += 1;
+    });
+
+    // Find the game with the most hours
+    let mostPlayedGame = null;
+    let maxHours = 0;
+
+    for (const [game, stats] of Object.entries(gameStats)) {
+        if (stats.totalHours > maxHours) {
+            maxHours = stats.totalHours;
+            mostPlayedGame = {
+                name: game,
+                ...stats
+            };
+        }
+    }
+
+    // Render the most played game card
+    if (mostPlayedGame) {
+        mostPlayedCard.innerHTML = `
+            <div class="most-played-content">
+                <div class="most-played-game-name">${escapeHTML(mostPlayedGame.name)}</div>
+                <div class="most-played-stats">
+                    <div class="most-played-stat">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-text">${mostPlayedGame.totalHours.toFixed(1)} hours</div>
+                    </div>
+                    <div class="most-played-stat">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-text">${mostPlayedGame.sessionCount} session${mostPlayedGame.sessionCount !== 1 ? 's' : ''}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
 }
 
 // ========================================
