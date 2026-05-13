@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaming Session Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🎮 Gaming Session Tracker</h1>
+            <p class="subtitle">Track your gaming sessions, moods, and progress</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Add Session Form -->
+            <section class="form-section">
+                <h2>Add New Session</h2>
+                <form id="sessionForm" class="session-form">
+                    <div class="form-group">
+                        <label for="gameName">Game Name *</label>
+                        <input type="text" id="gameName" placeholder="Enter game name" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="hours">Hours Played *</label>
+                            <input type="number" id="hours" min="0.5" step="0.5" placeholder="e.g., 2.5" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date">Date *</label>
+                            <input type="date" id="date" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mood *</label>
+                        <div class="mood-selector">
+                            <button type="button" class="mood-btn" data-mood="happy" title="Happy">😊</button>
+                            <button type="button" class="mood-btn" data-mood="excited" title="Excited">🤩</button>
+                            <button type="button" class="mood-btn" data-mood="neutral" title="Neutral">😐</button>
+                            <button type="button" class="mood-btn" data-mood="frustrated" title="Frustrated">😤</button>
+                            <button type="button" class="mood-btn" data-mood="tired" title="Tired">😴</button>
+                        </div>
+                        <input type="hidden" id="mood" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes">Notes</label>
+                        <textarea id="notes" placeholder="Add any notes about your session..." rows="3"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Add Session</button>
+                </form>
+            </section>
+
+            <!-- Statistics Section -->
+            <section class="stats-section">
+                <h2>Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Sessions</div>
+                        <div class="stat-value" id="totalSessions">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Total Hours</div>
+                        <div class="stat-value" id="totalHours">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Average Hours</div>
+                        <div class="stat-value" id="avgHours">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Most Common Mood</div>
+                        <div class="stat-value" id="commonMood">-</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sessions List Section -->
+            <section class="sessions-section">
+                <div class="section-header">
+                    <h2>Session History</h2>
+                    <button id="clearAllBtn" class="btn-danger-small">Clear All</button>
+                </div>
+                <div id="sessionsList" class="sessions-list">
+                    <p class="empty-state">No sessions yet. Add one to get started!</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
